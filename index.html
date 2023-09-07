@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ms Merriweather</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="temp">
+        <!--Temp -->
+      </h1>
+      <p id="desc">
+        <!-- description -->
+      </p>
+      <form id="form">
+        <input 
+          id="zip" 
+          type="number" 
+          placeholder="zip code"
+          title="Please Enter a valid Zip Code"
+          pattern="^\d{5}(?:[-\s]\d{4})?$"
+        >
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <script>
+      // ------------------------------------------------------
+      // Developer Code
+
+      // Get Element refererences
+      const tempEl = document.getElementById('temp')
+      const descEl = document.getElementById('desc')
+      const formEl = document.getElementById('form')
+      const zipInput = document.getElementById('zip')
+
+      // Define event listeners
+      formEl.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const zip = zipInput.value
+        getWeather(zip)
+      })
+
+      // Functions 
+    function getWeather(zip) {
+      // Replace this with your own API key!
+      const apiKey = '467355df4c808dd6134a3b64e9ace282'
+      const units = 'imperial'
+      const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apiKey}&units=${units}`
+      fetch(path)
+        .then(res => res.json())
+        .then(json => {
+          tempEl.innerHTML = json.main.temp
+          descEl.innerHTML = json.weather[0].description
+        })
+        .catch(err => console.log(err.message))
+    }
+           
+    </script>
+  </body>
+</html>
